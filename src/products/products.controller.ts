@@ -12,12 +12,12 @@ export class ProductsController {
         @Body('description') prodDesc: string,
         @Body('price') prodPrice: number,
     ) {
-        const generatedId = await this.productsService.insertProduct(
+        const product = await this.productsService.addProduct(
             prodTitle,
             prodDesc,
             prodPrice,
         );
-        return { generatedId };
+        return product;
     }
 
     @Get()
