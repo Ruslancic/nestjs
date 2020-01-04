@@ -1,0 +1,22 @@
+{
+    "err": {
+        "errors": {
+            "email": {
+                "message": "Error, expected `email` to be unique. Value: `patrcik.mol@gmail.com`",
+                "name": "ValidatorError",
+                "properties": {
+                    "message": "Error, expected `email` to be unique. Value: `patrcik.mol@gmail.com`",
+                    "type": "unique",
+                    "path": "email",
+                    "value": "patrcik.mol@gmail.com"
+                },
+                "kind": "unique",
+                "path": "email",
+                "value": "patrcik.mol@gmail.com"
+            }
+        },
+        "_message": "User validation failed",
+        "message": "User validation failed: email: Error, expected `email` to be unique. Value: `patrcik.mol@gmail.com`",
+        "name": "ValidationError"
+    }
+}

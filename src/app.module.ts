@@ -16,7 +16,11 @@ import { UserGateway } from './user.gateway';
   imports: [
       ProductsModule, 
       ConfigModule.forRoot(),
-      MongooseModule.forRoot(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
+      MongooseModule.forRoot(process.env.MONGO_URI, { 
+          useNewUrlParser: true, 
+          useUnifiedTopology: true,
+          useCreateIndex: true
+         }),
       AuthModule,
       SharedModule,
       UserModule

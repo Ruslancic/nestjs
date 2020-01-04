@@ -3,9 +3,9 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './utils/http-error.filter';
 
 @Module({
-    providers: [{
+/*     providers: [{
         provide: APP_FILTER,
         useClass: HttpErrorFilter
-    }]
+    }] */
 })
 export class SharedModule {}
