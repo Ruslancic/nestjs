@@ -1,18 +1,15 @@
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
 
 import { PRODUCTS_ACTIONS } from '../actions/products.actions';
 import { Product } from '../models/product.model';
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
-import { ProductsService } from '../products.service';
 
 @WebSocketGateway({
     namespace: '/products'
 })
 export class ProductsGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
-
-    constructor(private readonly productsService: ProductsService) { }
 
     @WebSocketServer() private server: Server;
 
@@ -43,20 +40,5 @@ export class ProductsGateway implements OnGatewayConnection, OnGatewayDisconnect
     productDeleted(id: number) {
         console.log('PROD-GATEWAY: product deleted', id);
         this.server.emit(PRODUCTS_ACTIONS.LIVE_DELETED, id);
-    }
-
-    @SubscribeMessage('products')
-    handleEvent(@MessageBody() data: any) {
-        this.productsService.addProduct(data.title, data.description, data.price)
-            .then(result => {
-                const product = {
-                    id: result._id,
-                    title: result.title,
-                    description: result.description,
-                    price: result.price
-                }
-                this.productCreated(product)
-            });
-        /* console.log(data); */
     }
 }
