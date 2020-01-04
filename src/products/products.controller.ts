@@ -17,7 +17,7 @@ export class ProductsController {
             prodDesc,
             prodPrice,
         );
-        return product;
+        /* return product; */
     }
 
     @Get()

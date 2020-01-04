@@ -8,19 +8,19 @@ import { ProductsGateway } from './gateway/products.gateway'
 export class ProductsService {
     private products: Product[] = [];
 
-    constructor(@InjectModel('Product') private readonly productModel: Model<Product>, private gate: ProductsGateway) { }
+    constructor(@InjectModel('Product') private readonly productModel: Model<Product>, /* private gate: ProductsGateway */) { }
 
     async addProduct(title: string, desc: string, price: number) {
         const newProduct = new this.productModel({ title, description: desc, price });
         const result = await newProduct.save();
-        const boh = {
+        const product = {
             id: result._id,
             title: result.title,
             description: result.description,
             price: result.price
         }
-        this.gate.productCreated(boh);
-        return boh;
+        /* this.gate.productCreated(product); */
+        return result;
     }
 
     async getProducts() {
