@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UsePipes, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, Get, UseGuards, Logger, Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './models/auth-dto';
 import { ValidPipe } from 'src/shared/validation.pipe';
@@ -13,7 +13,9 @@ export class AuthController {
 
     @Get('users')
     @UseGuards(new AuthGuard)
+    @UsePipes(new ValidPipe())
     showUsers() {
+
         return this.authSrv.showAllUsers();
     }
 
