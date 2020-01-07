@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { UserSchema } from 'src/user/models/user.model';
 import { AuthService } from './auth.service';
-import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './auth.controller';
+import { AuthGateway } from './gateway/auth.gateway';
+
+
 
 
 @Module({
-    imports: [
-        JwtModule.register({ secretOrPrivateKey: 'misajackson' })
-    ],
-    providers: [AuthService],
-    exports: [AuthService]
+    imports: [ MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]) ],
+    providers: [AuthService, AuthGateway],
+    exports: [AuthService],
+    controllers: [AuthController]
 })
 export class AuthModule { }

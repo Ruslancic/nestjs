@@ -6,9 +6,7 @@ import { Product } from '../models/product.model';
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({
-    namespace: '/products'
-})
+@WebSocketGateway()
 export class ProductsGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
 
     @WebSocketServer() private server: Server;

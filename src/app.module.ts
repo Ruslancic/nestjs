@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
-import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
@@ -13,19 +12,19 @@ import { UserGateway } from './user.gateway';
 
 
 @Module({
-  imports: [
-      ProductsModule, 
-      ConfigModule.forRoot(),
-      MongooseModule.forRoot(process.env.MONGO_URI, { 
-          useNewUrlParser: true, 
-          useUnifiedTopology: true,
-          useCreateIndex: true
-         }),
-      AuthModule,
-      SharedModule,
-      UserModule
+    imports: [
+        ProductsModule,
+        ConfigModule.forRoot(),
+        MongooseModule.forRoot(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        }),
+        AuthModule,
+        SharedModule,
+        UserModule
     ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, UserGateway],
+    controllers: [AppController],
+    providers: [AppService, UserGateway],
 })
-export class AppModule {}
+export class AppModule { }
