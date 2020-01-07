@@ -3,7 +3,7 @@ import { Injectable, Logger, NotFoundException, HttpStatus, HttpException } from
 import { InjectModel } from '@nestjs/mongoose';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-import * as uuid from 'uuid/v4';
+
 
 
 import { User } from 'src/user/models/user.model';
@@ -18,12 +18,12 @@ export class AuthService {
 
     constructor(@InjectModel('User') private readonly userModel: Model<User>, private readonly gate: AuthGateway) { }
 
-    async login(data: LoginDTO) {
-        const rdid = uuid();
+    async login(data: LoginDTO): Promise<LoginAuthData> {
+        const provider = 'simpleLogin'
 
         const user = await this.userModel.findOne({ email: data.email });
         if (!user) {
-            throw new HttpException('Email non esitente', HttpStatus.NOT_FOUND);
+            throw new HttpException('Email sbagliata o inesitente', HttpStatus.NOT_FOUND);
         }
 
         const passwordMatch = await bcrypt.compare(data.password, user.password);
@@ -33,7 +33,7 @@ export class AuthService {
         }
 
         const token = jwt.sign(
-            { rdid },
+            { provider, indentificativo: user._id },
             process.env.JWT_KEY,
             { expiresIn: '10h' }
         );

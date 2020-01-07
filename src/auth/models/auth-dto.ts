@@ -11,6 +11,12 @@ export class RegisterDTO {
     password: string;
 }
 
+export class RegisterRO {
+    name: string;
+    email: string;
+    password: string;
+}
+
 export class LoginDTO {
 
     @IsEmail()

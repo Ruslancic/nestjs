@@ -1,7 +1,7 @@
 import { Controller, Post, Body, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './models/auth-dto';
-import { ValidationPipe } from 'src/shared/validation.pipe';
+import { ValidPipe } from 'src/shared/validation.pipe';
 
 
 
@@ -12,13 +12,13 @@ export class AuthController {
 
 
     @Post('login')
-    @UsePipes(new ValidationPipe())
+    @UsePipes(new ValidPipe())
     login(@Body() data: LoginDTO) {        
         return this.authSrv.login(data);
     }
 
     @Post('register')
-    @UsePipes(new ValidationPipe())
+    @UsePipes(new ValidPipe())
     register(@Body() data: RegisterDTO) {
         return this.authSrv.register(data);
     }
