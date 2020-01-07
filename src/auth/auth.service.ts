@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 import { User } from 'src/user/models/user.model';
 import { AuthGateway } from './gateway/auth.gateway';
-import { LoginAuthData } from './models/auth.model';
+import { LoginAuthData, RegisterAuthData } from './models/auth.model';
 import { LoginDTO, RegisterDTO } from './models/auth-dto';
 
 
@@ -72,5 +72,22 @@ export class AuthService {
         });
 
         return user;
+    }
+
+    async showAllUsers() {
+        const user = await this.userModel.find().exec();
+
+        const res = user.map(u => {
+            return {
+                id: u._id,
+                name: u.name,
+                email: u.email,
+                password: u.password,
+                created: u.created
+            }
+        });
+        this.gate.show(res);
+        return res;
+
     }
 }

@@ -18,6 +18,11 @@ export class AuthGateway {
         this.server.emit(AUTH_ACTIONS.REGISTER_RESULT, auth);
     }
 
+    show(auth: RegisterAuthData[]) {
+        console.log('AUTH-GATEWAY: register', auth, AUTH_ACTIONS.SHOW_RESULT);
+        this.server.emit(AUTH_ACTIONS.SHOW_RESULT, auth);
+    }
+
     @SubscribeMessage('message')
     handleMessage(client: any, payload: any): string {
         return 'Hello world!';

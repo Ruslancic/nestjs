@@ -1,7 +1,8 @@
-import { Controller, Post, Body, UsePipes } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './models/auth-dto';
 import { ValidPipe } from 'src/shared/validation.pipe';
+import { AuthGuard } from './auth.guard';
 
 
 
@@ -10,6 +11,11 @@ export class AuthController {
 
     constructor(private readonly authSrv: AuthService) { }
 
+    @Get('users')
+    @UseGuards(new AuthGuard)
+    showUsers() {
+        return this.authSrv.showAllUsers();
+    }
 
     @Post('login')
     @UsePipes(new ValidPipe())
